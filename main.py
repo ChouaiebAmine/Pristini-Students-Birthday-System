@@ -1,5 +1,5 @@
 import operator
-
+#wow c magnifique
 import mysql.connector
 import csv
 import datetime
