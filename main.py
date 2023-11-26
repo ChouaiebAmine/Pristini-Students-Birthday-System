@@ -1,5 +1,6 @@
 import operator
 #wow c magnifique
+#sabe7 el farawla :3
 import mysql.connector
 import csv
 import datetime
