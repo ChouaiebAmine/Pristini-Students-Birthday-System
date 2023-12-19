@@ -2,6 +2,9 @@ import mysql.connector
 import datetime
 import operator
 from tkinter import messagebox
+import smtplib
+from email.mime.text import MIMEText
+from email.mime.multipart import MIMEMultipart
 mydb = mysql.connector.connect(host="localhost", user="root", password="admin")
 cursor = mydb.cursor()
 mycursor= mydb.cursor()
@@ -27,37 +30,42 @@ def closest(birthdate):
         track += 1
     print(track)
 
+def send_email(receiver_email,subject,body):
+    # email configuration
+    sender_email = "pristiniproject1@gmail.com"
 
-def showallstudents():
-    mycursor.execute("SELECT * FROM students")
-    result = mycursor.fetchall()
-    #msg=messagebox.showinfo(result)
-    for x in result:
-        print(x[1])
-
-
-def orderASC():
-    mycursor.execute("SELECT * FROM students ORDER BY age ASC")
-    result = mycursor.fetchall()
-    for x in result:
-        print(f"Name:{x[1]},Age:{x[2]}")
-
-
-def orderDSC():
-    mycursor.execute("SELECT * FROM students ORDER BY age DESC")
-    result = mycursor.fetchall()
-    for x in result:
-        print(f"Name : {x[1]}, Age : {x[2]}")
-
-
-def showclosestbd():
+    # SMTP server configuration (for gmail)
+    smtp_server = "smtp.gmail.com"
+    smtp_port = 587
+    smtp_username = "pristiniproject1@gmail.com"
+    smtp_password = "dfpi hmdy ybui fmzv"
+    message = MIMEMultipart()
+    message["From"] = sender_email
+    message["To"] = receiver_email
+    message["Subject"] = subject
+    message.attach(MIMEText(body, "plain"))
+def birthday_wish():
+    mydb = mysql.connector.connect(
+        host="localhost",
+        user="root",
+        password="admin"
+    )
+    cursor = mydb.cursor()
+    cursor.execute("USE pristini")
     dict1 = {}
+    birthday_today= list()
     lst = []
-    mycursor.execute("SELECT * FROM students")
-    result = mycursor.fetchall()
+    cursor.execute("SELECT * FROM students")
+    result = cursor.fetchall()
     for x in result:
         num = closest(x[4])
         dict1.update({x[1]: num})
     sorted_dict = dict(sorted(dict1.items(), key=operator.itemgetter(1)))
     for x, y in sorted_dict.items():
-        print(f"Name : {x}, Days Before Birthday: {y}")
+        if y==0:
+            birthday_today.append(x)
+    for x in result:
+        if x[1] in birthday_today:
+            body = f"Happy birthday {x[1]},\n Enjoy your Day <3"
+            send_email(x[5], "Happy Birthday", body)
+            print("Email Sent")

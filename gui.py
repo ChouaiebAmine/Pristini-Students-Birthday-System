@@ -2,7 +2,6 @@ from tkinter import PhotoImage
 from PIL import ImageTk
 from pathlib import Path
 from tkinter import Tk, Canvas, Entry, Text, Button, PhotoImage, Label
-from projectfunctions import showallstudents, showclosestbd, orderASC, orderDSC
 from SQlpythonProject import DBmain
 
 OUTPUT_PATH = Path(__file__).parent

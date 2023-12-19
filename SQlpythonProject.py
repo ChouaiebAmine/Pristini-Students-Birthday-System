@@ -31,6 +31,7 @@ def DBmain(c):
         print(x[1])
     # pass
     # --------------------------
+    #projectfunctions.birthday_wish()
     choice = str(c)
     while choice != "0":
         # print("1-Show all Student's Names \n2-order students by age (ascending)\n3-order students by age (descending)\n4-show students closest birthday\n0-Quit Program")
@@ -60,16 +61,15 @@ def DBmain(c):
                     print(f"Name : {x[1]}, Age : {x[2]}")
                 break
             case "4":
-                print(4)
-                dict1 = {}
-                lst = []
+                dict1={}
+                lst=[]
                 mycursor.execute("SELECT * FROM students")
-                result = mycursor.fetchall()
+                result=mycursor.fetchall()
                 for x in result:
-                    num = projectfunctions.closest(x[4])
-                    dict1.update({x[1]: num})
-                sorted_dict = dict(dict1.items(), key=operator.itemgetter(1))
-                for x, y in sorted_dict.items():
+                    num=projectfunctions.closest(x[4])
+                    dict1.update({x[1]:num})
+                sorted_dict=dict(sorted(dict1.items(),key=operator.itemgetter(1)))
+                for x,y in sorted_dict.items():
                     print(f"Name : {x}, Days Before Birthday: {y}")
                 break
     """
