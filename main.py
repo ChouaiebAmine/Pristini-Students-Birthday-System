@@ -1,5 +1,6 @@
 import operator
-
+#wow c magnifique
+#sabe7 el farawla :3
 import mysql.connector
 import csv
 import datetime
@@ -86,3 +87,8 @@ with open("test.csv","a",newline="") as file:
         if dict['University']=='Pristini':
             writer.writerow([dict["FullName"],dict["Birthday"]])
 """""""""
+#OH MY GOD YOU GUYS MCHIT L9AHWA 9OTLOU N7EB ICED COFFEE
+# 9ALI CHNOWA 9OTLOU ICED COFFEE 
+#9ALI JAWEK BEHI
+#RJA3 JABLI DIRECT S5OUNA TECHWI FI WESTHA KA3BA THELJ
+#tes
