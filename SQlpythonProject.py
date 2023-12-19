@@ -13,22 +13,29 @@ mydb=mysql.connector.connect(
 )
 mycursor= mydb.cursor()
 mycursor.execute("USE pristini")
-"""""""""
-#entering data from a csv file to MySQL 
-mycursor.execute("CREATE TABLE STUDENTS(student_id INT AUTO_INCREMENT PRIMARY KEY,name VARCHAR(50),age INT,class VARCHAR(20),birthday DATE)")
 
+#entering data from a csv file to MySQL 
+#mycursor.execute("CREATE TABLE STUDENTS(student_id INT AUTO_INCREMENT PRIMARY KEY,name VARCHAR(50),age INT,class VARCHAR(20),birthday DATE,email VARCHAR(50))")
+"""""""""
 with open("test.csv") as file:
     reader=csv.DictReader(file)
     for row in reader:
         name=row["FullName"]
         age=projectfunctions.age(datetime.datetime.strptime(row["Birthday"],"%m/%d/%Y").date())
+        email=row["Email"]
         #class_s=row["class"]
-        bday=datetime.datetime.strptime(row["Birthday"],"%m/%d/%Y").date()
-        insert_query="INSERT INTO STUDENTS(name,age,birthday) VALUES (%s,%s,%s)"
-        mycursor.execute(insert_query,(name,age,bday))
-"""""""""
+        birthday=datetime.datetime.strptime(row["Birthday"],"%m/%d/%Y").date()
+        insert_query="INSERT INTO STUDENTS(name,age,birthday,email) VALUES (%s,%s,%s,%s)"
+        mycursor.execute(insert_query,(name,age,birthday,email))
+        mydb.commit()
+"""""""""""
+
+#send birthdaywish
+
+projectfunctions.birthday_wish()
 #mycursor.execute("SELECT * FROM STUDENTS")
 choice=None
+#Menu choice
 while(choice!="0"):
     print("1-Show all Student's Names \n2-order students by age (ascending)\n3-order students by age (descending)\n4-show students closest birthday\n0-Quit Program")
     choice=input("enter your choice:")
@@ -36,6 +43,7 @@ while(choice!="0"):
         print("Wrong input!")
     match choice:
         case "1":
+            #selects
             mycursor.execute("SELECT * FROM students")
             result=mycursor.fetchall()
             for x in result:
@@ -62,7 +70,8 @@ while(choice!="0"):
             for x,y in sorted_dict.items():
                 print(f"Name : {x}, Days Before Birthday: {y}")
 
-"""""""""
+
+"""""""""""
 mycursor.execute("SELECT * FROM students ORDER BY age DESC")
 result=mycursor.fetchall()
 for x in result:
@@ -70,19 +79,17 @@ for x in result:
     #mydb.commit()
 
 
-
-#for x in lst:
- #   print(x)
-
+#getting data from a csv file to another
 lst=list()
-with open("Students.csv") as file:
+with open("AllStudents.csv") as file:
     reader=csv.DictReader(file)
     for row in reader:
-        lst.append(sorted(row.items()))
+        lst.append(dict(row.items()))
+print(lst)
 #write the data into a new file "test"
 with open("test.csv","a",newline="") as file:
     writer=csv.writer(file)
     for dict in lst:
         if dict['University']=='Pristini':
-            writer.writerow([dict["FullName"],dict["Birthday"]])
-"""""""""
+            writer.writerow([dict["FullName"],dict["Birthday"],dict["Email"]])
+"""""""""""
