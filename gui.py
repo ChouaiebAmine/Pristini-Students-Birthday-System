@@ -5,7 +5,9 @@ from tkinter import Tk, Canvas, Entry, Text, Button, PhotoImage, Label
 from SQlpythonProject import DBmain
 
 OUTPUT_PATH = Path(__file__).parent
-ASSETS_PATH = OUTPUT_PATH / Path(r"D:\9raya fac\DBProject-Amen-amine-\assets\frame0")
+ASSETS_PATH = OUTPUT_PATH / Path(
+    r"D:\9raya fr\2\sem1\data base engineering\project\DBProject-Amen-amine-\assets\frame0"
+)
 
 
 def relative_to_assets(path: str) -> Path:
@@ -13,12 +15,12 @@ def relative_to_assets(path: str) -> Path:
 
 
 # ------------------------------------------------------------------------------------------
-
+result = ""
 window = Tk()
 window.geometry("1920x1080")
 window.configure(bg="#FFFFFF")
 # window.attributes("-fullscreen", True)
-#DBmain()
+# DBmain()
 canvas = Canvas(
     window,
     bg="#FFFFFF",
@@ -42,20 +44,37 @@ canvas.create_rectangle(70.0, 350.0, 707.0, 351.0, fill="#FFFFFF", outline="")
 canvas.create_rectangle(70.0, 742.0, 707.0, 743.0, fill="#FFFFFF", outline="")
 
 canvas.create_rectangle(70.0, 539.0, 707.0, 540.0, fill="#FFFFFF", outline="")
+
+
+# -----------------------------------------------------------------------------
+def b(x):
+    global result
+    result = DBmain(x)
+    canvas.create_rectangle(848.0, 117.0, 1850.0, 963.0, fill="#1D2831", outline="")
+    canvas.create_text(
+        900,
+        150,
+        anchor="nw",
+        text=result,
+        fill="#FFFFFF",
+        font=("AnekLatin Latin", 18 * -1),
+    )
+
+
 # --------------------------------------buttons----------------------------------------
 button_image = ImageTk.PhotoImage(file=relative_to_assets("button.png"))
 
-button_1=Button(command=lambda:DBmain(1))
-button_1.place(x=600,y=238)
+button_1 = Button(command=lambda: b(1))
+button_1.place(x=600, y=238)
 
-button_2 =Button(command=lambda:DBmain(2))
-button_2.place(x=600,y=425)
+button_2 = Button(command=lambda: b(2))
+button_2.place(x=600, y=425)
 
-button_3 =Button(command=lambda:DBmain(3))
-button_3.place(x=600,y=617)
+button_3 = Button(command=lambda: b(3))
+button_3.place(x=600, y=617)
 
-button_4 =Button(command=lambda:DBmain(4))
-button_4.place(x=600,y=816)
+button_4 = Button(command=lambda: b(4))
+button_4.place(x=600, y=816)
 
 # -------------------------------------text--------------------------------------------
 canvas.create_text(
@@ -99,6 +118,5 @@ canvas.create_text(
     fill="#FFFFFF",
     font=("AnekLatin Latin", 24 * -1),
 )
-
 # window.resizable(False, False)
 window.mainloop()

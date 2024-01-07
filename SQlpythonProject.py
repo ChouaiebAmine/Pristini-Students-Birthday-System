@@ -40,27 +40,34 @@ def DBmain(c):
             print("Wrong input!")
         match choice:
             case "1":
+                r=""
                 print(1)
                 mycursor.execute("SELECT * FROM students")
                 result = mycursor.fetchall()
                 for x in result:
-                    print(x[1])
+                    r+=str(x[1])+" \n"
+                return r
                 break
             case "2":
+                r=""
                 print(2)
                 mycursor.execute("SELECT * FROM students ORDER BY age ASC")
                 result = mycursor.fetchall()
                 for x in result:
-                    print(f"Name:{x[1]},Age:{x[2]}")
+                    r+=f"Name:{x[1]},Age:{x[2]}\n"
+                return r
                 break
             case "3":
+                r=""
                 print(3)
                 mycursor.execute("SELECT * FROM students ORDER BY age DESC")
                 result = mycursor.fetchall()
                 for x in result:
-                    print(f"Name : {x[1]}, Age : {x[2]}")
+                    r+=f"Name : {x[1]}, Age : {x[2]}\n"
+                return r
                 break
             case "4":
+                r=""
                 dict1={}
                 lst=[]
                 mycursor.execute("SELECT * FROM students")
@@ -70,7 +77,8 @@ def DBmain(c):
                     dict1.update({x[1]:num})
                 sorted_dict=dict(sorted(dict1.items(),key=operator.itemgetter(1)))
                 for x,y in sorted_dict.items():
-                    print(f"Name : {x}, Days Before Birthday: {y}")
+                    r+=f"Name : {x}, Days Before Birthday: {y}\n"
+                return r
                 break
     """
     #----------------------
@@ -98,3 +106,4 @@ def DBmain(c):
         for dict in lst:
             if dict['University']=='Pristini':
                 writer.writerow([dict["FullName"],dict["Birthday"]])"""
+DBmain(0)

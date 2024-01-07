@@ -6,13 +6,13 @@ import projectfunctions
 import re
 
 mydb=mysql.connector.connect(
-    host="localhost",
-    user="root",
-    password="admin"
+    host = "localhost",
+    user = "root",
+    password ="admin"
 )
 mycursor= mydb.cursor()
 mycursor.execute("USE pristini")
-"""""""""
+
 #entering data from a csv file to MySQL 
 mycursor.execute("CREATE TABLE STUDENTS(student_id INT AUTO_INCREMENT PRIMARY KEY,name VARCHAR(50),age INT,class VARCHAR(20),birthday DATE)")
 
@@ -25,7 +25,7 @@ with open("test.csv") as file:
         bday=datetime.datetime.strptime(row["Birthday"],"%m/%d/%Y").date()
         insert_query="INSERT INTO STUDENTS(name,age,birthday) VALUES (%s,%s,%s)"
         mycursor.execute(insert_query,(name,age,bday))
-"""""""""
+
 #----------------------------------------------------
 def showallstudents():
     mycursor.execute("SELECT * FROM students")
