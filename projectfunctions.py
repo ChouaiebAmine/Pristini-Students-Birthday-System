@@ -51,18 +51,23 @@ def birthday_wish():
     )
     cursor = mydb.cursor()
     cursor.execute("USE pristini")
+
     dict1 = {}
     birthday_today= list()
     lst = []
+
     cursor.execute("SELECT * FROM students")
     result = cursor.fetchall()
     for x in result:
         num = closest(x[4])
         dict1.update({x[1]: num})
+
     sorted_dict = dict(sorted(dict1.items(), key=operator.itemgetter(1)))
+
     for x, y in sorted_dict.items():
         if y==0:
             birthday_today.append(x)
+
     for x in result:
         if x[1] in birthday_today:
             body = f"Happy birthday {x[1]},\n Enjoy your Day <3"
